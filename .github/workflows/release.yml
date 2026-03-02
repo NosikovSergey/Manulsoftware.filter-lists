@@ -1,0 +1,31 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create dist folder
+        run: mkdir -p dist
+
+      - name: Compile rule-set
+        run: |
+          docker run --rm \
+            -v "${PWD}/dist:/dist" \
+            -v "${PWD}/rules.json:/rules.json" \
+            ghcr.io/sagernet/sing-box:latest \
+            rule-set compile rules.json -o dist/result.srs
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/result.srs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
