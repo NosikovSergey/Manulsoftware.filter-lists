@@ -5,6 +5,9 @@ on:
     tags:
       - "v*"
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,7 +24,7 @@ jobs:
             -v "${PWD}/dist:/dist" \
             -v "${PWD}/rules.json:/rules.json" \
             ghcr.io/sagernet/sing-box:latest \
-            rule-set compile rules.json -o dist/result.srs
+            rule-set compile /rules.json -o dist/result.srs
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
