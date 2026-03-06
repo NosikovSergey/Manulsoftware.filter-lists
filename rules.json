@@ -3,13 +3,11 @@
   "rules": [
     {
       "domain_suffix": [
-        "example.com"
+        "bi74.hwl.ovh"
       ]
     },
     {
-      "ip_cidr": [
-        "1.2.3.0/24"
-      ]
+      "ip_cidr": []
     }
   ]
 }
